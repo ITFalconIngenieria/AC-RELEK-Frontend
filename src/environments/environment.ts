@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
- // apiURL: ' https://8yjpszk4l7.execute-api.us-east-1.amazonaws.com/api/',
+  apiURL: ' https://6ra76c8p2d.execute-api.us-west-2.amazonaws.com/Api',
   webSocketURL: 'wss://r5h1tmeqt7.execute-api.us-west-2.amazonaws.com/testing'
 };
 
