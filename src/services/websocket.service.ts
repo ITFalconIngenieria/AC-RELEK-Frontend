@@ -11,6 +11,8 @@ export class WebsocketService {
   constructor() {}
 
   connect() {
+    console.log(this.webSocket);
+    
     return this.webSocket
   }
 

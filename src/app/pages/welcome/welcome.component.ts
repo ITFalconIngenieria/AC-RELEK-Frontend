@@ -11,13 +11,22 @@ import { IOTData } from '../../models/IOTData';
 })
 export class WelcomeComponent implements OnInit {
   destroyed = new Subject<void>();
-  estado1 = false;
-  estado2 = false;
+  estado1: boolean;
+  estado2: boolean;
   colorAC1= "#50D050"
   colorAC2= "gray"
   interval: any;
   data: any;
-  IotData: IOTData;
+  IotData: IOTData = {
+    AC1_ON: false,
+    AC2_ON: false,
+    CMD_OFF_AC1: false,
+    CMD_OFF_AC2: false,
+    CMD_ON_AC1: false,
+    CMD_ON_AC2: false,
+    DISPARO_AC1: false,
+    DISPARO_AC2: false
+  }
   constructor(
     private webSocketService: WebsocketService,
     private dataService: DataService,
@@ -30,10 +39,12 @@ export class WelcomeComponent implements OnInit {
     this.data = this.webSocketService.connect();
     this.data.next({ action: 'connectLive' });
     this.data.subscribe((data: any) => {
-      
       if (data.Items) {
+        
         this.IotData = data.Items;
-        //console.log(this.IotData);
+        console.log('IOT DATA');
+        console.log(data);
+        
         this.validateACState();
         clearInterval(this.interval);
         this.cd.detectChanges();
@@ -55,13 +66,13 @@ export class WelcomeComponent implements OnInit {
       case 1: 
           {
             if(this.estado1 == true){
-              this.IotData.CMD_OFF_AC1 = 1;
-              this.IotData.CMD_ON_AC1 = 0;
+              this.IotData.CMD_OFF_AC1 = true;
+              this.IotData.CMD_ON_AC1 = false;
             }
 
             if(this.estado1 == false){
-              this.IotData.CMD_OFF_AC1 = 0;
-              this.IotData.CMD_ON_AC1 = 1;
+              this.IotData.CMD_OFF_AC1 = true;
+              this.IotData.CMD_ON_AC1 = false;
             }
           }
         break;
@@ -69,13 +80,13 @@ export class WelcomeComponent implements OnInit {
       case 2:
         {
           if(this.estado2 == true){
-            this.IotData.CMD_OFF_AC1 = 1;
-            this.IotData.CMD_ON_AC1 = 0;
+            this.IotData.CMD_OFF_AC2 = true;
+            this.IotData.CMD_ON_AC2 = false;
           }
 
           if(this.estado2 == false){
-            this.IotData.CMD_OFF_AC1 = 0;
-            this.IotData.CMD_ON_AC1 = 1;
+            this.IotData.CMD_OFF_AC2 = false;
+            this.IotData.CMD_ON_AC2 = true;
           };
           
         }
@@ -86,58 +97,45 @@ export class WelcomeComponent implements OnInit {
     }
     
     let response = await this.dataService.post(this.IotData).toPromise();
-    console.log(response);
-    
-
   }
 
 
   validateACState(){
-    //console.log(this.IotData);
+    console.log(this.IotData);
     
 
-    if(this.IotData.DISPARO_AC1 == 1){
+    if(this.IotData.DISPARO_AC1 == true){
       this.estado1 = false;
       this.colorAC1= "gray";
     }
 
-    if(this.IotData.DISPARO_AC2 == 1){
+    if(this.IotData.DISPARO_AC2 == true){
       this.estado2 = false;
       this.colorAC2= "gray";
     }
 
-    if(this.IotData.DISPARO_AC1 == 0 && this.IotData.AC1_ON == 1){
+    if(this.IotData.DISPARO_AC1 == true && this.IotData.AC1_ON == true){
       this.estado1 = true;
       this.colorAC1= "#50D050";
     }
 
-    if(this.IotData.DISPARO_AC2 == 0 && this.IotData.AC2_ON == 1){
+    if(this.IotData.DISPARO_AC2 == true && this.IotData.AC2_ON == true){
       this.estado2 = true;
       this.colorAC2= "#50D050";
     }
 
-    if(this.IotData.DISPARO_AC1 == 0 && this.IotData.AC1_ON == 0){
+    if(this.IotData.DISPARO_AC1 == false && this.IotData.AC1_ON == false){
       this.estado1 = false;
       this.colorAC1= "gray";
     }
 
-    if(this.IotData.DISPARO_AC2 == 0 && this.IotData.AC2_ON == 0){
+    if(this.IotData.DISPARO_AC2 == false && this.IotData.AC2_ON == false){
       this.estado2 = false;
       this.colorAC2 = "gray";
     }
   }
 
   initIotData(){
-    this.IotData = {
-      AC1_ON: 0,
-      AC2_ON: 0,
-      CMD_OFF_AC1: 0,
-      CMD_OFF_AC2: 0,
-      CMD_ON_AC1: 0,
-      CMD_ON_AC2: 0,
-      DISPARO_AC1: 1,
-      DISPARO_AC2: 1
-    }
   }
 
 }

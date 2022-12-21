@@ -10,8 +10,13 @@
                 <!-- <div style="border-style: solid; width: 10%; height: 30%; text-align: center;"></div> -->
                 <div nz-row style="margin-left: 200px;">
                     <h4 style="margin-right:10px">Estado: </h4>
-                    <div nz-col [ngStyle]="{'background-color': colorAC1}" style="border-style: solid; border-width: 1px; width: 25px; height: 25px;">
-                    </div>
+                    <div nz-col [ngStyle]="{'background-color': 'green'}" *ngIf="estado1 ; else desactivado1"
+                        style="border-style: solid; border-width: 1px; width: 25px; height: 25px;">
+                        </div>
+                    <ng-template #desactivado1>
+                        <div nz-col [ngStyle]="{'background-color': 'gray'}" 
+                            style="border-style: solid; border-width: 1px; width: 25px; height: 25px;">
+                            </div></ng-template>
                     &nbsp;</div>
 
             </div>
@@ -20,10 +25,16 @@
                 <h1 style="color: black; text-align: center;">A/C Tipo Split Ducto</h1>
                 <div nz-row style="margin-left: 200px;">
                     <h4 style="margin-right:10px">Estado: </h4>
-                    <div nz-col [ngStyle]="{'background-color': colorAC2}"
+                    <div nz-col [ngStyle]="{'background-color': 'green'}" *ngIf="estado2 ; else desactivado2"
                         style="border-style: solid; border-width: 1px; width: 25px; height: 25px;">
                         </div>
+                    <ng-template #desactivado2>
+                        <div nz-col [ngStyle]="{'background-color': 'gray'}" 
+                            style="border-style: solid; border-width: 1px; width: 25px; height: 25px;">
+                            </div></ng-template>
+                    
                         &nbsp;</div>
+
             </div>
         </div>
         <div nz-row nzJustify="center" nzAlign="middle" [nzGutter]="[8,48]">    

@@ -13,14 +13,14 @@ export class DataService {
   body = {
     "state": {
       "desired": {
-        "CMD_ON_AC1": 0,
-        "CMD_ON_AC2": 0,
-        "DISPARO_AC1": 0,
-        "DISPARO_AC2": 0,
-        "CMD_OFF_AC2": 0,
-        "CMD_OFF_AC1": 0,
-        "AC1_ON": 0,
-        "AC2_ON": 0
+        "CMD_ON_AC1": false,
+        "CMD_ON_AC2": false,
+        "DISPARO_AC1": false,
+        "DISPARO_AC2": false,
+        "CMD_OFF_AC2": false,
+        "CMD_OFF_AC1": false,
+        "AC1_ON": false,
+        "AC2_ON": false
       }
     }
   }
