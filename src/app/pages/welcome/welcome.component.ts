@@ -72,8 +72,8 @@ export class WelcomeComponent implements OnInit {
             }
 
             if(this.estado1 == false){
-              this.IotData.CMD_OFF_AC1 = 1;
-              this.IotData.CMD_ON_AC1 = 0;
+              this.IotData.CMD_OFF_AC1 = 0;
+              this.IotData.CMD_ON_AC1 = 1;
             }
           }
         break;
