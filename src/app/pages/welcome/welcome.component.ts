@@ -18,14 +18,15 @@ export class WelcomeComponent implements OnInit {
   interval: any;
   data: any;
   IotData: IOTData = {
-    AC1_ON: false,
-    AC2_ON: false,
-    CMD_OFF_AC1: false,
-    CMD_OFF_AC2: false,
-    CMD_ON_AC1: false,
-    CMD_ON_AC2: false,
-    DISPARO_AC1: false,
-    DISPARO_AC2: false
+    AC1_ON: 0,
+    AC2_ON: 0,
+    CMD_OFF_AC1: 0,
+    CMD_OFF_AC2: 0,
+    CMD_ON_AC1: 0,
+    CMD_ON_AC2: 0,
+    DISPARO_AC1: 0,
+    DISPARO_AC2: 0,
+    Prueba1: 0,
   }
   constructor(
     private webSocketService: WebsocketService,
@@ -66,13 +67,13 @@ export class WelcomeComponent implements OnInit {
       case 1: 
           {
             if(this.estado1 == true){
-              this.IotData.CMD_OFF_AC1 = true;
-              this.IotData.CMD_ON_AC1 = false;
+              this.IotData.CMD_OFF_AC1 = 1;
+              this.IotData.CMD_ON_AC1 = 0;
             }
 
             if(this.estado1 == false){
-              this.IotData.CMD_OFF_AC1 = true;
-              this.IotData.CMD_ON_AC1 = false;
+              this.IotData.CMD_OFF_AC1 = 1;
+              this.IotData.CMD_ON_AC1 = 0;
             }
           }
         break;
@@ -80,13 +81,13 @@ export class WelcomeComponent implements OnInit {
       case 2:
         {
           if(this.estado2 == true){
-            this.IotData.CMD_OFF_AC2 = true;
-            this.IotData.CMD_ON_AC2 = false;
+            this.IotData.CMD_OFF_AC2 = 1;
+            this.IotData.CMD_ON_AC2 = 0;
           }
 
           if(this.estado2 == false){
-            this.IotData.CMD_OFF_AC2 = false;
-            this.IotData.CMD_ON_AC2 = true;
+            this.IotData.CMD_OFF_AC2 = 0;
+            this.IotData.CMD_ON_AC2 = 1;
           };
           
         }
@@ -97,6 +98,8 @@ export class WelcomeComponent implements OnInit {
     }
     
     let response = await this.dataService.post(this.IotData).toPromise();
+    console.log(response);
+    
   }
 
 
@@ -104,32 +107,32 @@ export class WelcomeComponent implements OnInit {
     console.log(this.IotData);
     
 
-    if(this.IotData.DISPARO_AC1 == true){
+    if(this.IotData.DISPARO_AC1 == 1){
       this.estado1 = false;
       this.colorAC1= "gray";
     }
 
-    if(this.IotData.DISPARO_AC2 == true){
+    if(this.IotData.DISPARO_AC2 == 1){
       this.estado2 = false;
       this.colorAC2= "gray";
     }
 
-    if(this.IotData.DISPARO_AC1 == true && this.IotData.AC1_ON == true){
+    if(this.IotData.DISPARO_AC1 == 1 && this.IotData.AC1_ON == 1){
       this.estado1 = true;
       this.colorAC1= "#50D050";
     }
 
-    if(this.IotData.DISPARO_AC2 == true && this.IotData.AC2_ON == true){
+    if(this.IotData.DISPARO_AC2 == 1 && this.IotData.AC2_ON == 1){
       this.estado2 = true;
       this.colorAC2= "#50D050";
     }
 
-    if(this.IotData.DISPARO_AC1 == false && this.IotData.AC1_ON == false){
+    if(this.IotData.DISPARO_AC1 == 0 && this.IotData.AC1_ON == 0){
       this.estado1 = false;
       this.colorAC1= "gray";
     }
 
-    if(this.IotData.DISPARO_AC2 == false && this.IotData.AC2_ON == false){
+    if(this.IotData.DISPARO_AC2 == 0 && this.IotData.AC2_ON == 0){
       this.estado2 = false;
       this.colorAC2 = "gray";
     }
